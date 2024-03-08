@@ -61,4 +61,4 @@ async function bootstrap() {
   app.mount('#app');
 }
 
-bootstrap();
+bootstrap().then(r => {});
