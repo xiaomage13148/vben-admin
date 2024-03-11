@@ -2,12 +2,15 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
+// 读取项目 src 文件夹下的所有子目录名，并去除目录名末尾的 "s" 字母 (如果有的话)，最后将处理后的目录名存储在 scopes 常量中
 const scopes = fs
   .readdirSync(path.resolve(__dirname, 'src'), { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => dirent.name.replace(/s$/, ''));
 
 // precomputed scope
+// git status --porcelain 获取当前工作目录的状态
+// 获取当前处于修改状态的子目录名
 const scopeComplete = execSync('git status --porcelain || true')
   .toString()
   .trim()
@@ -19,7 +22,9 @@ const scopeComplete = execSync('git status --porcelain || true')
 
 /** @type {import('cz-git').UserConfig} */
 module.exports = {
+  // 忽略init提交
   ignores: [(commit) => commit.includes('init')],
+  // 要继承规则的预设配置数组
   extends: ['@commitlint/config-conventional'],
   rules: {
     'body-leading-blank': [2, 'always'],
