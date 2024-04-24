@@ -7,7 +7,9 @@ import { setupLoadingDirective } from './loading';
 import { setupEllipsisDirective } from './ellipsis';
 
 export function setupGlobDirectives(app: App) {
+  // 设置权限指令
   setupPermissionDirective(app);
+  //
   setupLoadingDirective(app);
   setupEllipsisDirective(app);
 }
